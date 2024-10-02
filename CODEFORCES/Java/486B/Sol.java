@@ -4,73 +4,85 @@ public class Sol {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
-        int n = scanner.nextInt();
         int m = scanner.nextInt();
+        int n = scanner.nextInt();
         
-        int[][] b = new int[n][m];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
+        int[][] b = new int[m][n];
+        int[][] a = new int[m][n];
+        int[][] c = new int[m][n];
+
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
                 b[i][j] = scanner.nextInt();
+                a[i][j] = 1;
+                c[i][j] = 0;
             }
         }
-        
-        // Initialize matrix a with all zeros
-        int[][] a = new int[n][m];
 
-        // Construct a based on b
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (b[i][j] == 1) {
-                    a[i][j] = 1;
+
+        for (int i = 0; i < m; ++i)
+            {
+                for (int j = 0; j < n; ++j)
+                {
+                    if (b[i][j] == 0)
+                    {
+                        for (int k = 0; k < n; ++k)
+                        {
+                            a[i][k] = 0;
+                        }
+                        for (int k = 0; k < m; ++k)
+                        {
+                            a[k][j] = 0;
+                        }
+
+                    }
                 }
             }
-        }
+        for (int i = 0; i < m; ++i)
+            {
+                for (int j = 0; j < n; ++j)
+                {
+                    if (a[i][j]==1 )
+                    {
+                        for (int k = 0; k < n; ++k)
+                        {
+                            c[i][k] = 1;
+                        }
+                        for (int k = 0; k < m; ++k)
+                        {
+                            c[k][j] = 1;
+                        }
 
-        // Check if OR condition holds
-        boolean valid = true;
-
-        // Check rows
-        for (int i = 0; i < n; i++) {
-            int rowOR = 0;
-            for (int j = 0; j < m; j++) {
-                rowOR |= a[i][j];
-            }
-            for (int j = 0; j < m; j++) {
-                if (rowOR != b[i][j]) {
-                    valid = false;
-                    break;
+                    }
                 }
             }
-            if (!valid) break;
-        }
 
-        // Check columns
-        for (int j = 0; j < m && valid; j++) {
-            int colOR = 0;
-            for (int i = 0; i < n; i++) {
-                colOR |= a[i][j];
-            }
-            for (int i = 0; i < n; i++) {
-                if (colOR != b[i][j]) {
-                    valid = false;
-                    break;
-                }
-            }
-        }
 
-        // Output the result
-        if (valid) {
-            System.out.println("YES");
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < m; j++) {
+    for (int i = 0; i < m; ++i)
+    {
+    	for (int j = 0; j < n; ++j)
+    	{
+    		if (c[i][j] != b[i][j])
+    		{
+                System.out.println("NO");
+                return;
+    		}
+    	}
+    }
+
+        System.out.println("YES");
+
+
+    for (int i = 0; i < m; ++i)
+    {
+    	for (int j = 0; j < n; ++j)
+    	{
                     System.out.print(a[i][j] + " ");
-                }
-                System.out.println();
-            }
-        } else {
-            System.out.println("NO");
-        }
 
+    	}
+        System.out.println();
+    }
         scanner.close();
     }
 }
